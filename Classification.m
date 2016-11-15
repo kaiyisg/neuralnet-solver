@@ -6,10 +6,18 @@ activity_labels = importdata(fullfile(FILE_DIR,'/HAPT/activity_labels.txt'));
 features = importdata(fullfile(FILE_DIR,'/HAPT/features.txt'));
 features_info = importdata(fullfile(FILE_DIR,'/HAPT/features_info.txt'));
 
-%Variables to consider
+%Variables to consider tuning
 %Number of hidden layers
+%Training method
 %Number of neurons on the hidden layer
 %Type of activation function
+
+x = haptAttr'; 
+t = haptLabel';
+
+net = patternnet([5,5]);
+net = train(net,x,t);
+y = net(x);
 
 %activation function, num of neurons, hidden layers
 %classify outputs
