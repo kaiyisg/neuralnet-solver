@@ -1,4 +1,7 @@
-%File Importing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%File Importing                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 FILE_DIR = 'NeuralNet-Solver';
 haptAttr = importdata(fullfile(FILE_DIR, '/HAPT/haptAttr.txt'));
 haptLabel = importdata(fullfile(FILE_DIR,'/HAPT/haptLabel.txt'));
@@ -6,18 +9,34 @@ activity_labels = importdata(fullfile(FILE_DIR,'/HAPT/activity_labels.txt'));
 features = importdata(fullfile(FILE_DIR,'/HAPT/features.txt'));
 features_info = importdata(fullfile(FILE_DIR,'/HAPT/features_info.txt'));
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Getting data                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+t = zeros(8000,12);
+for i = 1:size(haptLabel)
+    t(i,haptLabel(i)) = 1;
+end
+
+%each input column entry out of 8000 has 561 attributes 
+x = haptAttr'; 
+%each output column entry out of 8000 has a '1' indicating the classification
+t = t';
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Getting data                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%net = patternnet([5,5]);
+net = patternnet(5);
+[net,tr] = train(net,x,t);
+y = net(x);
+
 %Variables to consider tuning
 %Number of hidden layers
 %Training method
 %Number of neurons on the hidden layer
 %Type of activation function
-
-x = haptAttr'; 
-t = haptLabel';
-
-net = patternnet([5,5]);
-net = train(net,x,t);
-y = net(x);
 
 %activation function, num of neurons, hidden layers
 %classify outputs
