@@ -28,33 +28,27 @@ t = t';
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %net = patternnet([5,5]);
+
+%making ur neural net
 net = patternnet(5);
+
+%training and getting results - get graph looking shit
 [net,tr] = train(net,x,t);
+
+%input into net to verify - confusion matrix
 y = net(x);
 
-%Variables to consider tuning
-%Number of hidden layers
-%Training method
-%Number of neurons on the hidden layer
+%performance parameter
+%training method / function
+%number of layers / neurons
+%dist of data set
+%normalization - mapping between -1 / 1 - to handle random inputs
+
+%not impt
 %Type of activation function
 
-%activation function, num of neurons, hidden layers
-%classify outputs
-%function approximation - mapping of input to single output can use neural
-%network with 1 hidden layer
-
-%zeros() for matrix
-%transpose ''
-%access a matrix - index from 1
-%matrix(row,column)
-%matrix(:,1:4)
-%1:4 = [1 2 3 4]
-%; - surpress command window output
-% struct - neural net is a struct
-%use matlab plot function
+%how to do it
 %net = patternnet - matlab toolbox for neural networks (or fitnet)
 %[net,tr] = train(net,new_______) 
-%train function to train network - 
 
-%different iterations using differnet parameters
 %generic algorithm?

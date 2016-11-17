@@ -1,0 +1,38 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%File Importing                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+FILE_DIR = 'NeuralNet-Solver';
+studentAttrStruct = importdata(fullfile(FILE_DIR, '/Students/students.csv'));
+studentAttrInt = studentAttrStruct.data;
+studentAttrTextData = studentAttrStruct.textdata;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Formating data to double[] for neural net %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+keySet =   {'GP','MS','U','R','GT3','LT3','A','T','at_home','health','services','teacher','home','reputation','course','mother','father','yes','no'};
+valueSet = [1,0,1,0,1,0,1,0,1,2,3,4,1,2,3,1,2,1,0];
+%String other is 5 for mjob,fjob, 4 for reason, 3 for guardian
+mapObj = containers.Map(keySet,valueSet);
+
+t_without_g1g2 = zeros(350,30);
+[i,j]=size(studentAttrTextData);
+for i = 1:size(haptLabel)
+    t(i,haptLabel(i)) = 1;
+end
+
+t_with_g1g2 = zeros(350,32);
+
+%Variables to consider tuning
+%Number of hidden layers
+%Training method
+%Number of neurons on the hidden layer
+%Type of activation function
+
+x = studentAttr'; 
+t = studentGrade(:,1)';
+
+net = fitnet(1);
+%net = train(net,x,t);
+%view(net);
+%y = net(x);
