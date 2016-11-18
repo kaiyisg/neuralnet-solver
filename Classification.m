@@ -24,31 +24,39 @@ x = haptAttr';
 t = t';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Getting data                              %
+%Setting up net                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%net = patternnet([5,5]);
+%making neural net
+net = patternnet(100);
 
-%making ur neural net
-net = patternnet(5);
+% Set up Division of Data for Training, Validation, Testing
+net.divideParam.trainRatio = 70/100;
+net.divideParam.valRatio = 15/100;
+net.divideParam.testRatio = 15/100;
 
-%training and getting results - get graph looking shit
+net.trainFcn = 'trainscg';
+
+net.trainParam.max_fail = 6;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Training net                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 [net,tr] = train(net,x,t);
-
-%input into net to verify - confusion matrix
 y = net(x);
 
-%performance parameter
-%training method / function
-%number of layers / neurons
-%dist of data set
-%normalization - mapping between -1 / 1 - to handle random inputs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plotting confusion matrix                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+y_test = net(x(:,tr.testInd));
+t_test = t(:,tr.testInd);
+plotconfusion(t_test,y_test);
 
-%not impt
-%Type of activation function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Plotting roc matrix                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%how to do it
-%net = patternnet - matlab toolbox for neural networks (or fitnet)
-%[net,tr] = train(net,new_______) 
-
-%generic algorithm?
+[tpr,fpr,th] = roc(t,y);
+%plotroc(t,y);
