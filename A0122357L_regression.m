@@ -56,44 +56,40 @@ for i = 1:350
     g3(i,1) = char(studentAttrInt(i,10));
 end
 
-% training parameters 
-net.trainParam.epochs = 1000;	
-net.trainParam.goal = 0;	
-net.trainParam.max_fail	= 6;	
-snet.trainParam.min_grad = 1e-7;	
-net.trainParam.mu = 0.001;	
-net.trainParam.mu_dec = 0.1;
-net.trainParam.mu_inc = 10;	
-net.trainParam.show = 25;	
-net.trainParam.showCommandLine = false;
-net.trainParam.showWindow = true;	
-net.trainParam.time = inf;	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Setting up net                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% net.trainParam.epochs = 1000;
+% net.trainParam.goal = 0;
+% net.trainParam.max_fail	= 6;
+% net.trainParam.min_grad = 1e-7;
+% net.trainParam.mu = 0.001;
+% net.trainParam.mu_dec = 0.1;
+% net.trainParam.mu_inc = 10;
+% net.trainParam.show = 25;
+% net.trainParam.showCommandLine = false;
+% net.trainParam.showWindow = true;
+% net.trainParam.time = inf;
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Part A: no g1g2                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% x = t_without_g1g2'; 
+% t = g3';
 
-x = t_without_g1g2'; 
+% net = fitnet(10);
+% net.trainFcn = 'trainlm'; %trainlm or trainbr
+% net = train(net,x,t);
+% y = net(x);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Part B: with g1g2                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+x = t_with_g1g2'; 
 t = g3';
 
-% %% training the network (default setting)
-net = fitnet(20);
+net = fitnet([1,1]);
+net.trainFcn = 'trainlm'; %trainlm or trainbr
 net = train(net,x,t);
 y = net(x);
-
-
-% %% fitting the data using 2 hidden layers
-% 
-% net = fitnet([10 10]);
-% net = train(net,studentAttr,studentGrade_G3);
-% y = net(x);
-%% fitting the data with additional G1 and G2 as inputs
-
-%net = fitnet([1]); %the different number of layers and neurons are adjsuted here
-%net = train(net,studentAttr_G1G2,studentGrade_G3);
-%y = net(x);
-
-% %% fitting the data with additional G1 and G2 as inputs and using trainbr instead of trainln
-% 
-% net.trainFcn = 'trainbr';
-% net = fitnet(10);
-% 
-% net = train(net,studentAttr_G1G2,studentGrade_G3);
-% y = net(x);
